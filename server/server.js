@@ -1,9 +1,11 @@
 require('./config/config');
 
+const path = require('path');
 const _ = require('lodash');
 const express = require('express');
 const bodyParser = require('body-parser');
 const {ObjectID} = require('mongodb');
+const publicPath = path.join(__dirname, '../public');
 
 var {mongoose} = require('./db/mongoose');
 var {Todo} = require('./models/todo');
@@ -14,6 +16,7 @@ var app = express();
 const port = process.env.PORT;
 
 app.use(bodyParser.json());
+app.use(express.static(publicPath));
 
 app.post('/todos', authenticate, (req, res) => {
   var todo = new Todo({
